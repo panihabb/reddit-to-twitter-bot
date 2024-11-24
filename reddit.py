@@ -54,7 +54,7 @@ def get_submission(reddit_instance):
                     submission.save()
                     continue
 
-            if submission.url.endswith(('.jpg', '.png')):
+            if submission.url.endswith(('.jpg', '.png', '.jpeg')):
                 if check_size(submission.url, MAX_PHOTO_SIZE):
                     found = True
                     break
@@ -74,7 +74,7 @@ def get_submission(reddit_instance):
                             continue
                         
                         source = meta['s']
-                        if (extension[1] == "jpg" or extension[1] == "png") and check_size(source['u'], MAX_PHOTO_SIZE):
+                        if (extension[1] == "jpg" or extension[1] == "png" or extension[1] == "jpeg") and check_size(source['u'], MAX_PHOTO_SIZE):
                             correct_gallery = True
                             break
                 
@@ -103,7 +103,7 @@ def get_submission_gallery_filenames(submission):
                 continue
 
             source = meta['s']
-            if (extension[1] == "jpg" or extension[1] == "png") and check_size(source['u'], MAX_PHOTO_SIZE):
+            if (extension[1] == "jpg" or extension[1] == "png" or extension[1] == "jpeg") and check_size(source['u'], MAX_PHOTO_SIZE):
                 urls.append(source['u'])
                 filename = f"{submission.id}-{i}.{extension[1]}"
                 filenames.append(filename)
@@ -117,6 +117,8 @@ def get_submission_gallery_filenames(submission):
 def get_submission_filename(submission):
     if submission.url.endswith('.jpg'):
         filename = f"{submission.id}.jpg"
+    elif submission.url.endswith('.jpeg'):
+        filename = f"{submission.id}.jpeg"
     elif submission.url.endswith('.png'):
         filename = f"{submission.id}.png"
     elif submission.url.endswith('.gif'):
@@ -127,7 +129,7 @@ def get_submission_filename(submission):
     return filename
 
 def get_submission_media_category(submission):
-    if "/gallery/" in submission.url or submission.url.endswith(('.jpg', '.png')):
+    if "/gallery/" in submission.url or submission.url.endswith(('.jpg', '.png', '.jpeg')):
         media_category = "tweet_image"
     elif submission.url.endswith('.gif'):
         media_category = "tweet_gif"
@@ -137,7 +139,7 @@ def get_submission_media_category(submission):
     return media_category
 
 def get_submission_chunked(submission):
-    if "/gallery/" in submission.url or submission.url.endswith(('.jpg', '.png')):
+    if "/gallery/" in submission.url or submission.url.endswith(('.jpg', '.png', '.jpeg')):
         chunked = False
     elif submission.url.endswith('.gif') or 'v.redd.it' in submission.url:
         chunked = True

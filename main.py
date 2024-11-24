@@ -81,7 +81,7 @@ if __name__ == "__main__":
     reddit_instance = reddit_api()
     twitter_instance_v1 = twitter_api_v1()
     twitter_instance_v2 = twitter_api_v2()
-    while not success and iteration < 10:
+    while not success and iteration < 3:
         iteration += 1
         try:
             submission = get_submission(reddit_instance)
